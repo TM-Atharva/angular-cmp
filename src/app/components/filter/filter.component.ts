@@ -26,7 +26,7 @@ export class FilterComponent implements AfterViewInit {
 
   attributes: any[] = [];
   dropdownPopoverShow = false;
-  searchAttribute! : string;
+  searchAttribute!: string;
 
   @ViewChild('btnDropdownRef', { static: false })
   btnDropdownRef!: ElementRef;
@@ -36,7 +36,8 @@ export class FilterComponent implements AfterViewInit {
   constructor(private _eref: ElementRef) {}
 
   ngAfterViewInit() {
-    ConstantClass.placement = window.innerHeight < 368 ? 'top-start' : 'bottom-start';
+    ConstantClass.placement =
+      window.innerHeight < 368 ? 'top-start' : 'bottom-start';
 
     createPopper(
       this.btnDropdownRef.nativeElement,
@@ -72,11 +73,13 @@ export class FilterComponent implements AfterViewInit {
   //On apply Filter
   onApply() {
     this.filtredAttributes.emit(this.filterAttributes);
+    this.dropdownPopoverShow = false;
   }
 
   //On clear filter
   onClear() {
     this.filterAttributes.map((data) => (data.isChecked = false));
     this.filtredAttributes.emit(this.filterAttributes);
+    this.dropdownPopoverShow = false;
   }
 }
