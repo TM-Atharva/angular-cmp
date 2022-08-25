@@ -10,6 +10,6 @@ import { Filter2Component } from './filter2/filter2.component';
 @NgModule({
   declarations: [MenuComponent, FilterComponent, FilterPipe, Filter2Component],
   imports: [CommonModule, TranslateModule.forChild(), FormsModule],
-  exports: [MenuComponent, FilterComponent],
+  exports: [MenuComponent, FilterComponent, Filter2Component],
 })
 export class ComponentModule {}
