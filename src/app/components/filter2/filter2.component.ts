@@ -55,8 +55,12 @@ export class Filter2Component implements AfterViewInit {
 
   //To hide DropDown on click on outside this component
   @HostListener(ConstantClass.document.click, ['$event'])
-  public hideDropdown(event: Event) {
-    if (!this._eref.nativeElement.contains(event.target))
+  public hideDropdown(event: any) {
+    if (
+      !this._eref.nativeElement.contains(event.target) &&
+      event?.target &&
+      !event?.target?.src?.includes('close.svg')
+    )
       this.dropdownPopoverShow = false;
   }
 
@@ -69,33 +73,31 @@ export class Filter2Component implements AfterViewInit {
     }
   }
 
-  onClick(attribute : string){
-    if(!this.attributes.includes(attribute))
-    this.attributes.push(attribute);
-    console.log(this.attributes);
+  onClick(attribute: string) {
+    if (!this.attributes.includes(attribute)) this.attributes.push(attribute);
+  console.log(this.attributes.includes(attribute));
+  
   }
 
   //On apply Filter
   onApply() {
-    this.filterAttributes.map((data) => {
-      if(this.attributes.includes(data.name))
-      data.isChecked = true;
-    });
-    console.log(this.filterAttributes);
-    
-    this.filtredAttributes.emit(this.filterAttributes);
     this.dropdownPopoverShow = false;
+    this.filterAttributes.map((data) => {
+      data.isChecked = this.attributes.includes(data.name) ? true : false;
+    });
+
+    this.filtredAttributes.emit(this.filterAttributes);
   }
 
   //On clear filter
   onClear() {
+    this.dropdownPopoverShow = false;
     this.filterAttributes.map((data) => (data.isChecked = false));
     this.attributes = [];
     this.filtredAttributes.emit(this.filterAttributes);
-    this.dropdownPopoverShow = false;
   }
 
-  onCloseAttribute(index : number, attribute : string){    
+  onCloseAttribute(index: number) {
     this.attributes.splice(index, 1);
   }
 }

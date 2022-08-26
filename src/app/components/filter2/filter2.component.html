@@ -9,14 +9,14 @@
     </div>
 </div>
 <div #popoverDropdownRef [ngClass]="dropdownPopoverShow ? 'block' : 'hidden'"
-    class=" dropDownBlock text-sm border-b border-gray-100 border bg-white absolute w-52 z-20 rounded-lg shadow-xl p-2">
+    class=" dropDownBlock text-sm border-b border-gray-100 border bg-white absolute w-48 lg:w-80 z-20 rounded-lg shadow-xl p-2">
 
-    <div class="flex flex-wrap items-center w-52 m-2">
+    <div class="flex flex-wrap items-center w-44 lg:w-72 m-2">
         <div *ngFor="let attribute of attributes; let i = index"
-            class="p-1 bg-slate-100 rounded-lg mr-1 flex items-center mb-1">
+            class="p-1 bg-slate-300 rounded-lg mr-1 flex items-center mb-1">
             <span>{{
                 attribute }} </span>
-            <span><img class="mx-2 w-2 h-2" src="assets/svg/close.svg" alt="close2" (click)="onCloseAttribute(i, attribute)"></span>
+            <span><img class="mx-2 w-2 h-2" src="assets/svg/close.svg" alt="close-{{i}}" (click)="onCloseAttribute(i)"></span>
         </div>
     </div>
 
@@ -32,12 +32,15 @@
         <img class="mx-2 w-5 h-5" (click)="dropdownPopoverShow = false" src="assets/svg/close.svg" alt="close">
     </div>
 
-    <div *ngFor="let attribute of filterAttributes | filter: searchAttribute : ['name']; let i = index "
-        class="block items-center relative cursor-pointer text-black hover:bg-slate-100 py-2 ">
-        <div class="flex items-center" (click)="onClick(attribute.name)">
-            <p class="ml-2 w-full text-sm font-medium text-gray-900">{{ attribute?.name ||
-                "-"
-                }}</p>
+    <div class="overflow-y-auto h-44">
+        <div *ngFor="let attribute of filterAttributes | filter: searchAttribute : ['name']; let i = index "
+            class="block items-center relative cursor-pointer text-black hover:bg-slate-100 py-2"
+            [ngClass]="attribute.isChecked ? 'bg-slate-300' : ''">
+            <div class="flex items-center" (click)="onClick(attribute.name)">
+                <p class="ml-2 w-full text-sm font-medium text-gray-900">{{ attribute?.name ||
+                    "-"
+                    }}</p>
+            </div>
         </div>
     </div>
 
